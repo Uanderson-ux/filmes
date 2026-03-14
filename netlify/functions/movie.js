@@ -7,16 +7,17 @@ const BASE_URL = 'https://apachetorrent.com';
 
 exports.handler = async function (event, context) {
     // Determine the slug from the URL. Example: /filme-bem-vindo-a-tarzana-torrent
-    const urlPath = event.path || '';
+    let cleanSlug = event.queryStringParameters && event.queryStringParameters.slug;
 
-    // Extract the "cleanSlug" that was placed between /filme- and -torrent in index.html
-    let cleanSlug = '';
-    const slugMatch = urlPath.match(/\/filme-(.+)-torrent/);
+    if (!cleanSlug) {
+        const urlPath = event.path || '';
+        const slugMatch = urlPath.match(/\/filme-(.+)-torrent/);
 
-    if (slugMatch && slugMatch[1]) {
-        cleanSlug = slugMatch[1];
-    } else {
-        cleanSlug = urlPath.replace('/filme-', '').replace(/-torrent$/, '').replace(/^\//, '');
+        if (slugMatch && slugMatch[1]) {
+            cleanSlug = slugMatch[1];
+        } else {
+            cleanSlug = urlPath.replace('/filme-', '').replace(/-torrent$/, '').replace(/^\//, '');
+        }
     }
 
     if (!cleanSlug) {

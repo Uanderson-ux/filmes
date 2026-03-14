@@ -1,15 +1,10 @@
 [build]
-  command = "echo 'No build command needed'"
+  command = "npm install"
+  functions = "netlify/functions"
   publish = "."
 
 [dev]
   port = 3000
-
-[[redirects]]
-  from = "/.netlify/functions/scrape"
-  to = "/.netlify/functions/scrape"
-  status = 200
-  force = true
 
 [[redirects]]
   from = "/api/scrape"
