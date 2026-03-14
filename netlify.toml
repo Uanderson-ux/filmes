@@ -1,0 +1,41 @@
+[build]
+  command = "echo 'No build command needed'"
+  publish = "."
+
+[dev]
+  port = 3000
+
+[[redirects]]
+  from = "/.netlify/functions/scrape"
+  to = "/.netlify/functions/scrape"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/scrape"
+  to = "/.netlify/functions/scrape"
+  status = 200
+
+[[redirects]]
+  from = "/filme-*-torrent"
+  to = "/.netlify/functions/movie?slug=:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/sitemap"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sitemap-filmes.xml"
+  to = "/.netlify/functions/sitemap-filmes"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sitemap-series.xml"
+  to = "/.netlify/functions/sitemap-series"
+  status = 200
+  force = true

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{seo_title}}</title>
+    <meta name="description" content="{{seo_description}}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{seo_url}}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="video.movie">
+    <meta property="og:url" content="{{seo_url}}">
+    <meta property="og:title" content="{{seo_title}}">
+    <meta property="og:description" content="{{seo_description}}">
+    <meta property="og:image" content="{{seo_image}}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{seo_url}}">
+    <meta property="twitter:title" content="{{seo_title}}">
+    <meta property="twitter:description" content="{{seo_description}}">
+    <meta property="twitter:image" content="{{seo_image}}">
+
+    <!-- Preload Font / Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="preload"
+        as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2ecc13;
+            --primary-hover: #27af10;
+            --bg-dark: #0f1014;
+            --bg-card: #1a1c22;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            background: rgba(15, 16, 20, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        /* Movie Page Layout */
+        .movie-page {
+            display: flex;
+            gap: 40px;
+            padding: 60px 0;
+            margin-top: 20px;
+        }
+
+        .movie-poster {
+            flex-shrink: 0;
+            width: 350px;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--glass-border);
+            display: block;
+        }
+
+        .movie-content {
+            flex: 1;
+        }
+
+        .movie-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .movie-meta span {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .movie-synopsis {
+            font-size: 17px;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .download-section {
+            margin-top: 40px;
+        }
+
+        .download-section h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .download-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .download-item {
+            background: var(--glass);
+            padding: 18px 25px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .download-item:hover {
+            border-color: var(--primary);
+            background: rgba(46, 204, 19, 0.05);
+        }
+
+        .download-btn {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .download-btn:hover {
+            background: var(--primary-hover);
+            transform: scale(1.05);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-gray);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 900px) {
+            .movie-page {
+                flex-direction: column;
+                padding: 30px 0;
+            }
+
+            .movie-poster {
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .movie-title {
+                font-size: 32px;
+                text-align: center;
+            }
+
+            .movie-meta {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .download-item {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="/" class="logo">
+                    <i class="fas fa-film"></i> CINETORRENT
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Voltar para o Início</a>
+
+        <article class="movie-page">
+            <div class="movie-poster">
+                <img src="{{movie_image}}" alt="Poster do filme {{movie_title}}" loading="lazy">
+            </div>
+
+            <div class="movie-content">
+                <h1 class="movie-title">{{movie_title}}</h1>
+
+                <div class="movie-meta">
+                    {{movie_genres_html}}
+                    <span>{{movie_year}}</span>
+                </div>
+
+                <div class="movie-synopsis">
+                    {{movie_synopsis}}
+                </div>
+
+                <div class="download-section">
+                    <h3>Opções de Download via Torrent</h3>
+                    <div class="download-list">
+                        {{movie_downloads_html}}
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer style="margin-top: 60px; padding: 30px 0; border-top: 1px solid var(--glass-border); text-align: center;">
+        <div class="container">
+            <p>&copy; 2026 Cine Torrent - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
