@@ -16,7 +16,8 @@ exports.handler = async (event, context) => {
             statusCode: 200,
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'text/html'
+                'Content-Type': 'text/html',
+                'X-Scrape-Url': targetUrl
             },
             body: response
         };

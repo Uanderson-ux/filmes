@@ -787,7 +787,10 @@
                 const proxiedUrl = `/.netlify/functions/scrape?url=${encodeURIComponent(targetUrl)}`;
                 const response = await fetch(proxiedUrl);
 
-                if (!response.ok) throw new Error('Falha na resposta do servidor');
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Erro ${response.status}: ${response.statusText}${errorText ? ' - ' + errorText : ''}`);
+                }
 
                 const html = await response.text();
 
@@ -797,6 +800,10 @@
                 let movies = [];
                 // Handle both homepage format (.blocoCapa) and category format (.capaname/capaBlog)
                 const movieElements = doc.querySelectorAll('.blocoCapa, .capaBlog, .capaname');
+
+                if (movieElements.length === 0) {
+                    console.warn(`Nenhum seletor (.blocoCapa, .capaBlog, .capaname) encontrado no HTML de ${targetUrl}`);
+                }
 
                 movieElements.forEach(el => {
                     const a = el.querySelector('a');
@@ -818,8 +825,6 @@
                         }
 
                         // Apache Torrent slugs already end with -torrent (e.g. "avatar-baixar-torrent").
-                        // We strip the trailing "-torrent" so our URL wrapper doesn't double it.
-                        // movie.js will reconstruct the full Apache slug when fetching.
                         const cleanSlug = originalSlug.replace(/-torrent$/, '');
 
                         // Final user-facing URL format: /filme-[slug]-torrent
@@ -851,7 +856,7 @@
                 return movies;
             } catch (error) {
                 console.error('Erro ao buscar filmes:', error);
-                return [];
+                return { error: 'FETCH_ERROR', message: error.message };
             }
         }
 
@@ -873,6 +878,7 @@
                 let errorTitle = "Nenhum filme encontrado ou erro ao carregar.";
                 let errorIcon = "fas fa-exclamation-circle";
                 let extraAction = "";
+                let technicalDetail = "";
 
                 if (movies && movies.error === 'PROTOCOL_FILE') {
                     errorTitle = "Ação Necessária: Rodar o Servidor";
@@ -887,12 +893,16 @@
                         </div>
                         <p style="font-size: 13px;">Depois, acesse: <a href="http://localhost:3000" style="color: var(--primary);">http://localhost:3000</a></p>
                     `;
+                } else if (movies && movies.error === 'FETCH_ERROR') {
+                    errorTitle = "Erro de Comunicação com o Servidor";
+                    technicalDetail = `<p style="color: #ff4d4d; font-size: 12px; margin-top: 10px; font-family: monospace;">Detalhe: ${movies.message}</p>`;
                 }
 
                 moviesContainer.innerHTML = `
                     <div class="loading-spinner">
                         <i class="${errorIcon}" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
                         <p style="font-weight: 600;">${errorTitle}</p>
+                        ${technicalDetail}
                         ${extraAction}
                         <button onclick="fetchMovies(${currentPage})" class="download-btn" style="margin: 20px auto 0; background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; display: block;">Tentar Novamente</button>
                     </div>
